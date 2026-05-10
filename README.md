@@ -34,4 +34,47 @@ Recruiters often face challenges such as:
 
 ---
 
-## 🏗️ System Architecture
+
+---
+
+## ⚙️ Tech Stack
+
+- Python 🐍
+- NLP (NLTK, Regex)
+- Machine Learning (Scikit-learn)
+- Transformers (Hugging Face - Flan-T5)
+- PyPDF2
+- JSON Processing
+
+---
+
+## 📊 Scoring Logic
+
+| Skill Type       | Weight |
+|-----------------|--------|
+| Must Have        | 50%    |
+| Intermediate     | 30%    |
+| Good to Have     | 20%    |
+
+👉 Final Score = Weighted Match Percentage
+
+---
+
+## 🔄 Workflow
+
+1. Upload Resume (PDF)
+2. Extract and clean text from resume
+3. Input Job Description
+4. LLM extracts structured skills
+5. Resume skills are matched with JD skills
+6. Weighted scoring is applied
+7. Final recommendation is generated
+
+---
+
+## 📦 Installation
+
+```bash
+git clone <your-repo-link>
+cd AI-Resume-Analyzer
+pip install -r requirements.txt
