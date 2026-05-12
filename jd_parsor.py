@@ -56,6 +56,39 @@ def safe_json_parse(text: str):
             "raw_output": text
         }
 
+def convert_text_to_json(output_text):
+    result = {
+        "must_have": [],
+        "intermediate": [],
+        "good_to_have": []
+    }
+
+    try:
+        must = re.search(r"Must Have:\s*(.*?)(Intermediate:|$)", output_text, re.IGNORECASE)
+        inter = re.search(r"Intermediate:\s*(.*?)(Good to Have:|$)", output_text, re.IGNORECASE)
+        good = re.search(r"Good to Have:\s*(.*)", output_text, re.IGNORECASE)
+
+        if must:
+            result["must_have"] = [s.strip() for s in must.group(1).split(",") if s.strip()]
+
+        if inter:
+            result["intermediate"] = [s.strip() for s in inter.group(1).split(",") if s.strip()]
+
+        if good:
+            result["good_to_have"] = [s.strip() for s in good.group(1).split(",") if s.strip()]
+
+        return result
+
+    except Exception:
+        return {
+            "must_have": [],
+            "intermediate": [],
+            "good_to_have": [],
+            "error": "Text parsing failed",
+            "raw_output": output_text
+        }
+
+
 
 # -----------------------------
 # Main Function
@@ -83,7 +116,11 @@ def parse_jd_with_llm(jd_text: str):
         # Parse safely
         parsed_output = safe_json_parse(output_text)
 
+        if "error" in parsed_output:
+            parsed_output = convert_text_to_json(output_text)
+
         return parsed_output
+        
 
     except Exception as e:
         return {
