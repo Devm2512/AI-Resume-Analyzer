@@ -1,6 +1,7 @@
 from utils.pdf_parser import extract_text_from_pdf
 from utils.text_preprocessing import preprocessing_text
 from models.jd_parsor import parse_jd_with_llm
+from models.match_engine import calculate_match_score
 
 resume_path = "C:/Users/dewan/OneDrive/Desktop/AI Resume Analyzer and Selector/Data/Resume/Dewang_Moghe__Resume.pdf"
 
@@ -20,6 +21,8 @@ clean_text = preprocessing_text(raw_data)
 
 result = parse_jd_with_llm(jd_text)
 
+match_result = calculate_match_score(clean_text, result)
+
 print("\n--- PARSED JD OUTPUT ---\n")
 print(result)
 
@@ -34,3 +37,6 @@ if isinstance(result, dict) and "error" not in result:
 else:
     print("\n Error in parsing:")
     print(result)
+
+print("\n--- MATCH RESULT ---\n")
+print(match_result)
